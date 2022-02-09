@@ -1,0 +1,31 @@
+<project>
+
+    <path id="classpath">
+        <fileset dir="libs" includes="**/*.jar"/>
+    </path>
+
+    <target name="clear_dir">
+        <delete dir="build"/>
+    </target>
+
+    <target name="compilation">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes" classpathref="classpath" includeantruntime="false"/>
+    </target>
+
+    <target name="make_jar" depends="compilation">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/University.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="ua.com.alevel.Main"/>
+                <attribute name="Class-Path" value="libs/*"/>
+            </manifest>
+            <zipgroupfileset dir="libs" includes="*.jar"/>
+        </jar>
+    </target>
+
+    <target name="run_program">
+        <java jar="build/jar/University.jar" fork="true"/>
+    </target>
+
+</project>
